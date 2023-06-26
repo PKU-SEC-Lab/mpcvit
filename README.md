@@ -1,11 +1,25 @@
-# MPCViT
-This is the source code of [MPCViT: Searching for Accurate and Efficient MPC-friendly Vision Transformer with Heterogeneous Attention](https://arxiv.org/pdf/2211.13955.pdf).
+# MPCViT-Evaluation
+This is the source code of model evalution/inference for [MPCViT: Searching for Accurate and Efficient MPC-friendly Vision Transformer with Heterogeneous Attention](https://arxiv.org/pdf/2211.13955.pdf).
 
-## Inference of loaded ViT checkpoint on Tiny-ImageNet dataset
-Here is an example to evaluate mpcvit with mu=0.5 and knowledge distillation.
+## Model inference of loaded MPCViT checkpoints
+**Command examples:**
+
+Below is an example to evaluate MPCViT with $\mu=0.5$ **w/o** knowledge distillation (KD) on CIFAR-10.
 ```shell
-python inference.py --config configs/datasets/tiny_imagenet.yml --model vit_9_12_64 /path/to/tiny-imagenet-200 --model-checkpoint mpcvit_checkpoints/mpcvit_tinyimagenet-0.5-kd.pth.tar
+python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar10 --model-checkpoint mpcvit_checkpoints/mpcvit_cifar10-0.5.pth.tar
 ```
+
+Below is an example to evaluate MPCViT with $\mu=0.5$ **w/** knowledge distillation (KD) on CIFAR-10.
+```shell
+python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar10 --model-checkpoint mpcvit_checkpoints/mpcvit_cifar10-0.5-kd.pth.tar
+```
+
+**Datasets:**
+
+We provide model checkpoints on three widely used datasets, i.e., CIFAR-10, CIFAR-100 and Tiny-ImageNet.
+
+Usage: just simply modify the command above including `config, model, data_dir, model-checkpoint`.
+
 
 ## Citation
 ```bibtex
