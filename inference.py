@@ -643,7 +643,7 @@ def main():
     best_metric = None
     best_epoch = None
     output_dir = None
-    output_dir = get_outdir(args.output if args.output else './output/infer', str(datetime.now()))
+    # output_dir = get_outdir(args.output if args.output else './output/infer', str(datetime.now()))
     decreasing = True if eval_metric == 'loss' else False
 
     try:
