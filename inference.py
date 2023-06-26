@@ -377,7 +377,8 @@ def main():
         _logger.info('Training in distributed mode with multiple processes, 1 GPU per process. Process %d, total %d.'
                      % (args.rank, args.world_size))
     else:
-        _logger.info('Training with a single process on 1 GPUs.')
+        # _logger.info('Training with a single process on 1 GPUs.')
+        pass
     assert args.rank >= 0
 
     # resolve AMP arguments based on PyTorch / Apex availability
@@ -472,7 +473,8 @@ def main():
         amp_autocast = torch.cuda.amp.autocast
         loss_scaler = NativeScaler()
         if args.local_rank == 0:
-            _logger.info('Using native Torch AMP. Training in mixed precision.')
+            # _logger.info('Using native Torch AMP. Training in mixed precision.')
+            pass
     else:
         if args.local_rank == 0:
             _logger.info('AMP not enabled. Training in float32.')
@@ -519,10 +521,11 @@ def main():
         start_epoch = resume_epoch
     if lr_scheduler is not None and start_epoch > 0:
         lr_scheduler.step(start_epoch)
-
+    
+    """
     if args.local_rank == 0:
         _logger.info('Scheduled epochs: {}'.format(num_epochs))
-
+    """
     
     # sticker: create the train and eval datasets for cifar
     dataset_train = create_dataset(
@@ -635,29 +638,13 @@ def main():
 
     # setup loss function
     validate_loss_fn = nn.CrossEntropyLoss().cuda()
-
-    # setup checkpoint saver and eval metric tracking
+    
     eval_metric = args.eval_metric
     best_metric = None
     best_epoch = None
-    saver = None
     output_dir = None
-    if args.rank == 0:
-        if args.experiment:
-            exp_name = args.experiment
-        else:
-            exp_name = '-'.join([
-                datetime.now().strftime("%Y%m%d-%H%M%S"),
-                safe_model_name(args.model),
-                str(data_config['input_size'][-1])
-            ])
-        output_dir = get_outdir(args.output if args.output else './output/train', exp_name)
-        decreasing = True if eval_metric == 'loss' else False
-        saver = CheckpointSaver(
-            model=model, optimizer=optimizer, args=args, model_ema=model_ema, amp_scaler=loss_scaler,
-            checkpoint_dir=output_dir, recovery_dir=output_dir, decreasing=decreasing, max_history=args.checkpoint_hist)
-        with open(os.path.join(output_dir, 'args.yaml'), 'w') as f:
-            f.write(args_text)
+    output_dir = get_outdir(args.output if args.output else './output/infer', str(datetime.now()))
+    decreasing = True if eval_metric == 'loss' else False
 
     try:
         # Here, I load the trained ViT model to infer
@@ -665,13 +652,24 @@ def main():
         model.load_state_dict(checkpoint['state_dict'], strict=False)
         model.cuda()
         model.eval()
-        print('Verifying the model...')
-        alpha_list = []
+        print('Verifying the model with loaded wieghts...')
+        print('Alpha list for attention heads:')
+        layer = 0
         for name, param in model.named_parameters():
             if 'alpha' in name:
-                alpha_list.append(param.data.cpu().numpy().squeeze())
-        print('alpha_list:\n', alpha_list)
-        eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
+                print(f'layer {layer}:', param.data.cpu().numpy().squeeze())
+                layer += 1
+
+        saver = CheckpointSaver(
+            model=model, optimizer=optimizer, args=args, model_ema=model_ema, amp_scaler=loss_scaler,
+            checkpoint_dir=output_dir, recovery_dir=output_dir, decreasing=decreasing, max_history=args.checkpoint_hist)
+        
+        eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)  # infer
+
+        if saver is not None:
+            # save proper checkpoint with eval metric
+            save_metric = eval_metrics[eval_metric]
+            # best_metric, best_epoch = saver.save_checkpoint(0, metric=save_metric)
 
     except KeyboardInterrupt:
         pass
