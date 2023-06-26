@@ -23,23 +23,25 @@ We provide model checkpoints on three widely used datasets, i.e., CIFAR-10, CIFA
 
 Usage: just simply modify the command above including `config, model, data_dir, model-checkpoint`.
 
-config:
+1. config:
 ```shell
 configs/datasets/cifar10.yml
 configs/datasets/cifar100.yml
 configs/datasets/tiny_imagenet.yml
 ```
 
-model:
+2. model:
 ```shell
 vit_7_4_32 for CIFAR-10/100
 vit_9_12_64 for Tiny-ImageNet
 ```
 
-data_dir:
+3. data_dir:
+   
 set as the corresponding datasets.
 
-model-checkpoint:
+5. model-checkpoint:
+   
 set as the corresponding checkpoints.
 
 **Checkpoints:**
