@@ -63,6 +63,7 @@ You can evaluate MPCViT+ models on CIFAR-10/100 with the following command:
 ```shell
 python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar10 --model-checkpoint mpcvit_checkpoints/cifar-10/mpcvit_plus_cifar10.pth.tar --linear-gelu
 ```
+Note that some data points need post-added ReLU after GeLU linearization.
 
 ## Citation
 ```bibtex
