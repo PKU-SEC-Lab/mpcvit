@@ -331,6 +331,8 @@ parser.add_argument('--search-mode', action='store_true', default=False,
                     help='switch to search mode')
 parser.add_argument('--model-checkpoint', default='', type=str,
                     help='path to inference model checkpoint')
+parser.add_argument('--linear-gelu', action='store_true', default=False,
+                    help='wheather to linearizae GeLU')
 
 
 def _parse_args():
@@ -400,20 +402,21 @@ def main():
     random_seed(args.seed, args.rank)
 
     model = create_model(
-    args.model,
-    pretrained=args.pretrained,
-    img_size = args.img_size,  # I add this line
-    num_classes=args.num_classes,
-    drop_rate=args.drop,
-    drop_connect_rate=args.drop_connect,  # DEPRECATED, use drop_path
-    drop_path_rate=args.drop_path,
-    drop_block_rate=args.drop_block,
-    global_pool=args.gp,
-    bn_tf=args.bn_tf,
-    bn_momentum=args.bn_momentum,
-    bn_eps=args.bn_eps,
-    scriptable=args.torchscript,
-    checkpoint_path=args.initial_checkpoint)
+        args.model,
+        pretrained=args.pretrained,
+        img_size = args.img_size,  # I add this line
+        num_classes=args.num_classes,
+        drop_rate=args.drop,
+        drop_connect_rate=args.drop_connect,  # DEPRECATED, use drop_path
+        drop_path_rate=args.drop_path,
+        drop_block_rate=args.drop_block,
+        global_pool=args.gp,
+        bn_tf=args.bn_tf,
+        bn_momentum=args.bn_momentum,
+        bn_eps=args.bn_eps,
+        scriptable=args.torchscript,
+        checkpoint_path=args.initial_checkpoint
+    )
 
     if args.num_classes is None:
         assert hasattr(model, 'num_classes'), 'Model must have `num_classes` attr if not set on cmd line/config.'
@@ -652,6 +655,7 @@ def main():
         model.load_state_dict(checkpoint['state_dict'], strict=False)
         model.cuda()
         model.eval()
+        # print(model)
         print('Verifying the model with loaded wieghts...')
         print('Alpha list for attention heads:')
         layer = 0
@@ -659,6 +663,14 @@ def main():
             if 'alpha' in name:
                 print(f'layer {layer}:', param.data.cpu().numpy().squeeze())
                 layer += 1
+
+        if args.linear_gelu:
+            print('Beta list for GeLUs:')
+            layer = 0
+            for name, param in model.named_parameters():
+                if 'beta' in name:
+                    print(f'layer {layer}:', param.data.cpu().numpy().squeeze())
+                    layer += 1
 
         saver = CheckpointSaver(
             model=model, optimizer=optimizer, args=args, model_ema=model_ema, amp_scaler=loss_scaler,
