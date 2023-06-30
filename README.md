@@ -51,10 +51,18 @@ set as the corresponding checkpoints.
 Our trained MPCViT models which are reported in the paper are avaliable [here](https://drive.google.com/drive/folders/1YFICe9me9LY3F37uG0YGXw7_52HA3bFL?usp=sharing).
 Your can freely download the checkpoints that you need to evaluate the model performance.
 
-**Numerical Results:**
+**Numerical results:**
 
 Note that we missed a part of the model checkpoints during completing this paper, so we re-run our experiments again to obtain the missing checkpoints.
 Therefore, there is a slight fluctuation (less than 0.1%) between the model results and the results reported in the paper, which is considered to be completely acceptable.
+
+## MPCViT+ evaluation
+
+Besides MPCViT, we also propose MPCViT+ to accelerate MLP blocks including GeLU and linear operators.
+You can evaluate MPCViT+ models on CIFAR-10/100 with the following command:
+```shell
+python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar10 --model-checkpoint mpcvit_checkpoints/cifar-10/mpcvit_plus_cifar10.pth.tar --linear-gelu
+```
 
 ## Citation
 ```bibtex
