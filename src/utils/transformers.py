@@ -112,7 +112,7 @@ class Attention(Module):
 
         # self.alpha.data = torch.clamp(self.alpha.data, min=0, max=1)
         
-        # modifid: split heads and then concat them
+        # modified: split heads and then concat them
         for i, h in enumerate(self.alpha.squeeze()):
             # print('i:', i, 'h:', h)
             attn_head = attn[:, i, :, :]
