@@ -69,12 +69,11 @@ Note that some data points need post-added ReLU after GeLU linearization.
 
 ## Citation
 ```bibtex
-@misc{zeng2023mpcvit,
-      title={MPCViT: Searching for Accurate and Efficient MPC-Friendly Vision Transformer with Heterogeneous Attention}, 
-      author={Wenxuan Zeng and Meng Li and Wenjie Xiong and Tong Tong and Wenjie-Lu and Jin Tan and Runsheng Wang and Ru Huang},
-      year={2023},
-      eprint={2211.13955},
-      archivePrefix={arXiv},
-      primaryClass={cs.CR}
+@inproceedings{zeng2023mpcvit,
+  title={Mpcvit: Searching for accurate and efficient mpc-friendly vision transformer with heterogeneous attention},
+  author={Zeng, Wenxuan and Li, Meng and Xiong, Wenjie and Tong, Tong and Lu, Wen-jie and Tan, Jin and Wang, Runsheng and Huang, Ru},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={5052--5063},
+  year={2023}
 }
 ```
