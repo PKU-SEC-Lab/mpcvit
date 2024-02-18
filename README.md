@@ -68,7 +68,29 @@ python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /pa
 Note that some data points need post-added ReLU after GeLU linearization.
 
 ## Training
-We provide the training code for MPCViT. Below we give CIFAR-10 as an example.
+We provide the training code for MPCViT. 
+To switch inference to training, the following code in `src/utils/transformers.py` should be replaced with the below one:
+```python
+# modified: split heads and then concat them
+for i, h in enumerate(self.alpha.squeeze()):
+   # print('i:', i, 'h:', h)
+   attn_head = attn[:, i, :, :]
+   # print(attn_head.shape)
+   if h == 1:  # relusoftmax
+       attn_head = self.relu(attn_head) / (torch.sum(self.relu(attn_head), dim=-1, keepdim=True) + self.eps)
+   elif h == 0:  # scalattn
+       attn_head = attn_head / attn_head.size(-1)
+   attn[:, i, :, :] = attn_head
+```
+```python
+scalattn = attn / attn.size(3)  # scaling attention
+attn = self.relu(attn)
+attn = attn / (torch.sum(attn, dim=-1, keepdim=True) + self.eps)  # ReLUSoftmax attention
+attn = self.alpha * attn + (1 - self.alpha) * scalattn  # weighted-sum for arch searching
+```
+
+
+Below we give CIFAR-10 as an example.
 
 **Baseline**
 ```shell
