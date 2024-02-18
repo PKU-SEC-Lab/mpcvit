@@ -72,7 +72,7 @@ We provide the training code for MPCViT. Below we give CIFAR-10 as an example.
 
 **Baseline**
 ```shell
-python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /home/mengli/datasets/cifar-10/ --retrain-mode --search-ckpt /home/mengli/projects/vit-linearization/mpcvit_cifar10-0.7.pth.tar
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /home/mengli/datasets/cifar-10/
 ```
 
 **Search**
