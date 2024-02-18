@@ -67,6 +67,16 @@ python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /pa
 ```
 Note that some data points need post-added ReLU after GeLU linearization.
 
+## MPCViT training
+We provide the training code for MPCViT.
+**Baseline**
+
+**Search**
+
+**Retrain**
+
+**Use knowledge distillation**
+
 ## Citation
 ```bibtex
 @inproceedings{zeng2023mpcvit,
