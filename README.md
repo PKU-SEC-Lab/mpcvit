@@ -56,7 +56,7 @@ Your can freely download the checkpoints that you need to evaluate the model per
 **Numerical results:**
 
 Note that we missed a part of the model checkpoints during completing this paper, so we re-run our experiments again to obtain the missing checkpoints.
-Therefore, there is a slight fluctuation (less than 0.1%) between the model results and the results reported in the paper, which is considered to be completely acceptable.
+Therefore, there is a slight fluctuation (less than 0.1%) between the model results and the results reported in the paper, which is considered to be acceptable.
 
 ## MPCViT+ evaluation
 
@@ -67,12 +67,12 @@ python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /pa
 ```
 Note that some data points need post-added ReLU after GeLU linearization.
 
-## MPCViT training
+## Training
 We provide the training code for MPCViT. Below we give CIFAR-10 as an example.
 
 **Baseline**
 ```shell
-python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /home/mengli/datasets/cifar-10/
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/
 ```
 
 **Search**
@@ -84,7 +84,7 @@ python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifa
 ```shell
 python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600 --rs-ratio 0.7
 ```
-You can directly use our searched alpha values to retrain the model like below:
+*- Note that you can directly use our searched alpha (see [here](https://drive.google.com/drive/folders/1YFICe9me9LY3F37uG0YGXw7_52HA3bFL?usp=sharing)) to retrain the model like below:*
 ```shell
 python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt ./mpcvit_cifar10-0.7.pth.tar --epochs 600 --rs-ratio 0.7
 ```
