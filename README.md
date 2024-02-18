@@ -68,14 +68,27 @@ python inference.py --config configs/datasets/cifar10.yml --model vit_7_4_32 /pa
 Note that some data points need post-added ReLU after GeLU linearization.
 
 ## MPCViT training
-We provide the training code for MPCViT.
+We provide the training code for MPCViT. Below we give CIFAR-10 as an example.
+
 **Baseline**
+```shell
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /home/mengli/datasets/cifar-10/ --retrain-mode --search-ckpt /home/mengli/projects/vit-linearization/mpcvit_cifar10-0.7.pth.tar
+```
 
 **Search**
+```shell
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --search-mode --epochs 300
+```
 
 **Retrain**
+```shell
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600
+```
 
-**Use knowledge distillation**
+**Train with knowledge distillation**
+```shell
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600 --use-token-kd --teacher-ckpt /path/to/ckpt
+```
 
 ## Citation
 ```bibtex
