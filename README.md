@@ -82,13 +82,18 @@ python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifa
 
 **Retrain**
 ```shell
-python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600 --rs-ratio 0.7
+```
+You can directly use our searched alpha values to retrain the model like below:
+```shell
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt ./mpcvit_cifar10-0.7.pth.tar --epochs 600 --rs-ratio 0.7
 ```
 
 **Train with knowledge distillation**
 ```shell
-python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600 --use-token-kd --teacher-ckpt /path/to/ckpt
+python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600 --rs-ratio 0.7 --use-token-kd --teacher-ckpt /path/to/ckpt
 ```
+ 
 
 ## Citation
 ```bibtex
