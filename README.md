@@ -92,11 +92,6 @@ attn = self.alpha * attn + (1 - self.alpha) * scalattn  # weighted-sum for arch 
 
 Below we give CIFAR-10 as an example.
 
-**Baseline**
-```shell
-python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/
-```
-
 **Search**
 ```shell
 python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --search-mode --epochs 300
