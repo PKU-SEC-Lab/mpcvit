@@ -127,8 +127,8 @@ CIFAR-10:
 |Softmax ViT|-| 93.97 | 112.23 |
 |ReLU Softmax ViT| -|93.52 | 71.82 | 
 |ScaleAttn ViT| -|92.23 | 44.63| 
-|Linformer| 0.3|91.85|102.87 |
-|Linformer| 0.5|92.32|109.32 |
+|Linformer| 0.3|92.32|102.87 |
+|Linformer| 0.5|91.85|109.32 |
 |Linformer| 0.7|92.33|119.94 |
 |THE-X| -|89.66|52.39 |
 |MPCFormer w/o KD| -| 92.93|66.98|
