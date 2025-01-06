@@ -1,4 +1,4 @@
-# MPCViT-Evaluation
+# MPCViT
 This is the source code of model evalution/inference for [MPCViT: Searching for Accurate and Efficient MPC-friendly Vision Transformer with Heterogeneous Attention](https://arxiv.org/pdf/2211.13955.pdf), which has been accpeted by ICCV 2023.
 
 Our trained MPCViT models which are reported in the paper are avaliable [here](https://drive.google.com/drive/folders/1YFICe9me9LY3F37uG0YGXw7_52HA3bFL?usp=sharing).
