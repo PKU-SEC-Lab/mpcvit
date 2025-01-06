@@ -55,7 +55,7 @@ Your can freely download the checkpoints that you need to evaluate the model per
 
 **Numerical results:**
 
-Note that we missed a part of the model checkpoints during completing this paper, so we re-run our experiments again to obtain the missing checkpoints.
+Note that we missed a part of the model checkpoints during completing this paper, so we re-run our experiments again from scratch to obtain the missing checkpoints.
 Therefore, there is a slight fluctuation (less than 0.1%) between the model results and the results reported in the paper, which is considered to be acceptable.
 
 ## MPCViT+ evaluation
@@ -110,6 +110,36 @@ python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifa
 ```shell
 python train.py -c configs/datasets/cifar10.yml --model vit_7_4_32 /path/to/cifar-10/ --retrain-mode --search-ckpt /path/to/ckpt --epochs 600 --rs-ratio 0.7 --use-token-kd --teacher-ckpt /path/to/ckpt
 ```
+
+## Main results
+
+CIFAR-10:
+
+| $\mu$ |  Accuracy w/o KD (%)   |  Accuracy w/ KD (%)   |  Latency (s)  |
+|----|  ----  | ----  | ----  |
+|0.1| 92.86 | 93.59 | 48.03 |
+|0.3| 93.01 | 94.08 | 52.88 |
+|0.5| 93.21 | 94.22 | 58.66 |
+|0.7| 93.38 | 94.27 | 63.56 |
+
+CIFAR-100:
+
+| $\mu$ |  Accuracy w/o KD (%)   |  Accuracy w/ KD (%)   |  Latency (s)  |
+|----|  ----  | ----  | ----  |
+|0.1| 73.17 | 76.40 | 48.74 |
+|0.3| 74.51 | 76.93 | 53.34 |
+|0.5| 74.45 | 76.92 | 59.27 |
+|0.7| 75.38 | 77.46 | 63.94 |
+
+Tiny-ImageNet:
+
+| $\mu$ |  Accuracy w/o KD (%)   |  Accuracy w/ KD (%)   |  Latency (s)  |
+|----|  ----  | ----  | ----  |
+|0.1| 56.75 | 62.65 | 220.69 |
+|0.3| 58.05 | 63.38 | 316.77 |
+|0.5| 58.39 | 63.45 | 621.75 |
+|0.7| 59.02 | 63.03 | 823.74 |
+
  
 
 ## Citation
