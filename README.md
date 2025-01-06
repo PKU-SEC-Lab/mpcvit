@@ -122,6 +122,18 @@ CIFAR-10:
 |0.5| 93.21 | 94.22 | 58.66 |
 |0.7| 93.38 | 94.27 | 63.56 |
 
+|Method| $\mu$ |  Accuracy (%)    |  Latency (s)  |
+|----|  ----  | ---- |---- |
+|Softmax ViT|-| 93.97 | 112.23 |
+|ReLU Softmax ViT| -|93.52 | 71.82 | 
+|ScaleAttn ViT| -|92.23 | 44.63| 
+|Linformer| 0.3|91.85|102.87 |
+|Linformer| 0.5|92.32|109.32 |
+|Linformer| 0.7|92.33|119.94 |
+|THE-X| -|89.66|52.39 |
+|MPCFormer w/o KD| -| 92.93|66.98|
+|MPCFormer w/ KD| -|93.98 | 66.98 |
+
 CIFAR-100:
 
 | $\mu$ |  Accuracy w/o KD (%)   |  Accuracy w/ KD (%)   |  Latency (s)  |
